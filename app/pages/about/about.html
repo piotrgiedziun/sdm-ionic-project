@@ -1,0 +1,42 @@
+<ion-navbar *navbar hideBackButton>
+    <button menuToggle>
+        <ion-icon name='menu'></ion-icon>
+    </button>
+
+    <ion-title>
+        About
+    </ion-title>
+</ion-navbar>
+
+<ion-content class="has-header cards-bg">
+
+    <ion-card class="cards-list-demo">
+        <ion-card-header>
+            Application was developed by...
+        </ion-card-header>
+
+        <ion-list>
+            <button ion-item (click)="openInfo()">
+                <ion-icon name='information-circle' item-left></ion-icon>
+                Website
+            </button>
+
+            <button ion-item (click)="openFacebook()">
+                <ion-icon name='logo-facebook' item-left></ion-icon>
+                Facebook
+            </button>
+
+            <button ion-item (click)="openTwitter()">
+                <ion-icon name='logo-twitter' item-left></ion-icon>
+                Twitter
+            </button>
+
+            <button ion-item (click)="openMail()">
+                <ion-icon name='mail' item-left></ion-icon>
+                Contact us
+            </button>
+
+        </ion-list>
+    </ion-card>
+
+</ion-content>

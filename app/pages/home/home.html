@@ -1,16 +1,20 @@
-<ion-navbar *navbar>
+<ion-navbar *navbar hideBackButton>
+
+  <button menuToggle>
+    <ion-icon name='menu'></ion-icon>
+  </button>
+
   <ion-title>
-    Home
+    SDM App
   </ion-title>
 </ion-navbar>
 
-<ion-content class="home">
+<ion-content class="has-header cards-bg">
   <ion-card>
-    <ion-card-header>
-      Card Header
-    </ion-card-header>
     <ion-card-content>
-      Hello World
+      <img src="http://placehold.it/150x150" />
+
+      <button full (click)="changeLanguage()">Change Language</button>
     </ion-card-content>
   </ion-card>
 </ion-content>

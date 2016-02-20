@@ -1,31 +1,58 @@
-import {App, Platform} from 'ionic-framework/ionic';
+import {App, Platform, Events, IonicApp, Storage, SqlStorage} from 'ionic-framework/ionic';
 import {Inject} from 'angular2/core';
 import {HomePage} from './pages/home/home';
+import {AboutPage} from './pages/about/about';
+import {CategoryListPage} from './pages/category-list/category-list';
 
+import {CategoryProvider} from './providers/category'
 
 @App({
-  template: '<ion-nav [root]="rootPage"></ion-nav>',
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+  templateUrl: 'build/app.html',
+  providers: [CategoryProvider],
+  config: {}
 })
 export class MyApp {
-  constructor(@Inject(Platform) platform) {
-    this.rootPage = HomePage;
+  constructor(@Inject(Platform) platform,
+              @Inject(Events) events,
+              @Inject(IonicApp) app)  {
+    this.events = events;
+    this.app = app;
+
+    this.root = CategoryListPage;
+
+    this.pages = [
+      { title: 'Home', component: HomePage },
+      { title: 'Categories', component: CategoryListPage},
+      { title: 'About', component: AboutPage }
+    ];
 
     platform.ready().then(() => {
-      // The platform is now ready. Note: if this callback fails to fire, follow
-      // the Troubleshooting guide for a number of possible solutions:
-      //
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      //
-      // First, let's hide the keyboard accessory bar (only works natively) since
-      // that's a better default:
-      //
-      // Keyboard.setAccessoryBarVisible(false);
-      //
-      // For example, we might change the StatusBar color. This one below is
-      // good for dark backgrounds and light text:
-      // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+      // init database
+      this.storage = new Storage(SqlStorage);
+      this.storage.query('CREATE TABLE IF NOT EXISTS category (id INTEGER, name TEXT)').then((data) => {
+        console.log('table created')
+      }, (error) => {
+        console.log('unable to create table' + JSON.stringify(error.err));
+      });
     });
+
+    this.eventsListener();
+  }
+
+  eventsListener() {
+    this.events.subscribe('app:language', (parms: any) => {
+      console.log('selected language', parms[0].name);
+    });
+  }
+
+  openPage(page) {
+    this.app.getComponent('leftMenu').close();
+    let nav = this.app.getComponent('nav');
+
+    if (page.index) {
+      nav.setRoot(page.component, {tabIndex: page.index});
+    } else {
+      nav.setRoot(page.component);
+    }
   }
 }

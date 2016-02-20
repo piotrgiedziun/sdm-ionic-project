@@ -1,0 +1,19 @@
+<ion-navbar *navbar>
+    <ion-buttons start>
+        <button (click)="dismiss()">
+            Cancel
+        </button>
+    </ion-buttons>
+    <ion-title>
+        Select language
+    </ion-title>
+</ion-navbar>
+
+<ion-content>
+    <ion-list>
+        <button ion-item *ngFor="#lang of languages"
+                (click)="changeLanguage(lang)">
+            {{ lang.name }}
+        </button>
+    </ion-list>
+</ion-content>

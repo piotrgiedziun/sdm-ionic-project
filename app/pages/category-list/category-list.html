@@ -1,0 +1,25 @@
+<ion-navbar *navbar hideBackButton>
+    <button menuToggle>
+        <ion-icon name='menu'></ion-icon>
+    </button>
+
+    <ion-title>
+        Categories
+    </ion-title>
+</ion-navbar>
+
+<ion-content class="has-header cards-bg">
+    <ion-card *ngFor="#category of categories">
+
+        <ion-card-content>
+            <h2 class="card-title">
+                {{category.name}}
+            </h2>
+            <p>
+                {{category.description}}
+            </p>
+        </ion-card-content>
+
+    </ion-card>
+
+</ion-content>
