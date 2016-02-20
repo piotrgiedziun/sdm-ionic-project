@@ -29,9 +29,10 @@ export class MyApp {
     platform.ready().then(() => {
       // init database
       this.storage = new Storage(SqlStorage);
-      this.storage.query('CREATE TABLE IF NOT EXISTS category (id INTEGER, name TEXT)').then((data) => {
-        console.log('table created')
+      this.storage.query('CREATE TABLE IF NOT EXISTS category (id INTEGER, name TEXT)').then(() => {
+        this.events.publish('db:ready');
       }, (error) => {
+        this.events.publish('db:error');
         console.log('unable to create table' + JSON.stringify(error.err));
       });
     });

@@ -11,7 +11,7 @@ export class CategoryListPage {
 
         this.categories = [];
 
-        this.categoryProvider.getCategories().then(categories => {
+        this.categoryProvider.getCategoriesFromDb().then(categories => {
             console.log(categories);
             this.categories = categories;
         })
